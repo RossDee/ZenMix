@@ -11,8 +11,6 @@ import { useEffect } from 'react'
 
 import '@tamagui/core/reset.css'
 
-import { TamaguiProvider, View } from '@tamagui/core'
-
 import {
   useFonts,
   JosefinSans_100Thin,
@@ -31,7 +29,16 @@ import {
   JosefinSans_700Bold_Italic,
 } from '@expo-google-fonts/josefin-sans'
 
-import { useColorScheme } from '@components/useColorScheme'
+import { TamaguiProvider, createTamagui } from '@tamagui/core'
+import { config } from '@tamagui/config/v3'
+
+const tamaguiConfig = createTamagui(config)
+
+// make TypeScript type everything based on your config
+type Conf = typeof tamaguiConfig
+declare module '@tamagui/core' {
+  interface TamaguiCustomConfig extends Conf {}
+}
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -51,6 +58,7 @@ export default function RootLayout() {
     JosefinSemiBold: JosefinSans_700Bold,
     JosefinLight: JosefinSans_300Light,
     JosefinMedium: JosefinSans_500Medium,
+    Inter: JosefinSans_400Regular,
   })
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -72,10 +80,8 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme()
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <TamaguiProvider config={tamaguiConfig}>
       <Stack>
         <Stack.Screen
           name='(tabs)'
@@ -86,6 +92,6 @@ function RootLayoutNav() {
           options={{ presentation: 'modal' }}
         />
       </Stack>
-    </ThemeProvider>
+    </TamaguiProvider>
   )
 }
