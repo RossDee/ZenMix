@@ -14,11 +14,10 @@ module.exports = function (api) {
             '@constants': './src/constants',
             '@hooks': './src/hooks',
             '@navigation': './src/navigation',
-            '@assets': './src/assets',
+            '@sceens': './src/screens',
           },
         },
       ],
-      'react-native-reanimated/plugin',
     ],
   }
 }
