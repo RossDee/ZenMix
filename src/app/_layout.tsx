@@ -55,7 +55,7 @@ SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    JosefinSemiBold: JosefinSans_700Bold,
+    InterBold: JosefinSans_700Bold,
     JosefinLight: JosefinSans_300Light,
     JosefinMedium: JosefinSans_500Medium,
     Inter: JosefinSans_400Regular,

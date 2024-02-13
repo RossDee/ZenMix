@@ -1,18 +1,36 @@
-import { StyleSheet } from 'react-native'
+import { useEffect, useState } from 'react'
+import { View, StyleSheet, Button } from 'react-native'
+import { Audio } from 'expo-av'
 
-import EditScreenInfo from '@components/EditScreenInfo'
-import { Text, View } from '@components/Themed'
+export default function App() {
+  const [sound, setSound] = useState()
 
-export default function TabTwoScreen() {
+  async function playSound() {
+    console.log('Loading Sound')
+    const { sound } = await Audio.Sound.createAsync(
+      require('@public/sounds/nature/campfire.mp3')
+    )
+    setSound(sound)
+
+    console.log('Playing Sound')
+    await sound.playAsync()
+  }
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound')
+          sound.unloadAsync()
+        }
+      : undefined
+  }, [sound])
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tab Two</Text>
-      <View
-        style={styles.separator}
-        lightColor='#eee'
-        darkColor='rgba(255,255,255,0.1)'
+      <Button
+        title='Play Sound'
+        onPress={playSound}
       />
-      <EditScreenInfo path='app/(tabs)/two.tsx' />
     </View>
   )
 }
@@ -20,16 +38,30 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+    backgroundColor: '#ecf0f1',
+    padding: 10,
   },
 })
+
+// <XStack
+//   maxWidth={250}
+//   padding='$2'
+//   alignSelf='stretch'
+// >
+//   <MusicCard
+//     CardProps={{
+//       size: '$4',
+//       width: '$15',
+//       height: '250',
+//       animation: 'bouncy',
+//       hoverStyle: { scale: 0.925 },
+//       pressStyle: { scale: 0.9, backgroundColor: '$background0' },
+//     }}
+//     MusicInfo={{ name: 'nature', catalog: 'nature' }}
+//   />
+//   <SimpleSlider
+//     height={200}
+//     orientation='vertical'
+//   />
+// </XStack>
