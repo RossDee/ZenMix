@@ -48,9 +48,8 @@ SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    JosefinSemiBold: JosefinSans_700Bold,
-    JosefinLight: JosefinSans_300Light,
-    JosefinMedium: JosefinSans_500Medium,
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    ...FontAwesome.font,
   })
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -70,6 +69,12 @@ export default function RootLayout() {
 
   return <RootLayoutNav />
 }
+
+const [fontsLoaded, fontError] = useFonts({
+  JosefinSemiBold: JosefinSans_700Bold,
+  JosefinLight: JosefinSans_300Light,
+  JosefinMedium: JosefinSans_500Medium,
+})
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme()

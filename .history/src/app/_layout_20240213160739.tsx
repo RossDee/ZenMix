@@ -31,7 +31,9 @@ import {
   JosefinSans_700Bold_Italic,
 } from '@expo-google-fonts/josefin-sans'
 
-import { useColorScheme } from '@components/useColorScheme'
+import useColorScheme from './useColorScheme'
+
+// optional but recommended CSS reset:
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -48,9 +50,8 @@ SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    JosefinSemiBold: JosefinSans_700Bold,
-    JosefinLight: JosefinSans_300Light,
-    JosefinMedium: JosefinSans_500Medium,
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    ...FontAwesome.font,
   })
 
   // Expo Router uses Error Boundaries to catch errors in the navigation tree.
@@ -75,17 +76,19 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme()
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name='(tabs)'
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='modal'
-          options={{ presentation: 'modal' }}
-        />
-      </Stack>
-    </ThemeProvider>
+    <TamaguiProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen
+            name='(tabs)'
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='modal'
+            options={{ presentation: 'modal' }}
+          />
+        </Stack>
+      </ThemeProvider>
+    </TamaguiProvider>
   )
 }

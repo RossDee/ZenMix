@@ -33,6 +33,15 @@ import {
 
 import { useColorScheme } from '@components/useColorScheme'
 
+// Fix font loading
+const [fontsLoaded] = useFonts({
+  JosefinSemiBold: JosefinSans_700Bold,
+  JosefinLight: JosefinSans_300Light,
+  JosefinMedium: JosefinSans_500Medium,
+})
+
+// optional but recommended CSS reset:
+
 export {
   // Catch any errors thrown by the Layout component.
   ErrorBoundary,
@@ -47,45 +56,26 @@ export const unstable_settings = {
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    JosefinSemiBold: JosefinSans_700Bold,
-    JosefinLight: JosefinSans_300Light,
-    JosefinMedium: JosefinSans_500Medium,
-  })
+  const colorScheme = useColorScheme()
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) throw error
-  }, [error])
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync()
-    }
-  }, [loaded])
-
-  if (!loaded) {
+  if (!fontsLoaded) {
     return null
   }
 
-  return <RootLayoutNav />
-}
-
-function RootLayoutNav() {
-  const colorScheme = useColorScheme()
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen
-          name='(tabs)'
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='modal'
-          options={{ presentation: 'modal' }}
-        />
-      </Stack>
-    </ThemeProvider>
+    <TamaguiProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen
+            name='(tabs)'
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='modal'
+            options={{ presentation: 'modal' }}
+          />
+        </Stack>
+      </ThemeProvider>
+    </TamaguiProvider>
   )
 }

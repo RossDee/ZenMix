@@ -71,6 +71,8 @@ export default function RootLayout() {
   return <RootLayoutNav />
 }
 
+const [fontsLoaded, fontError] = useFonts({})
+
 function RootLayoutNav() {
   const colorScheme = useColorScheme()
 
