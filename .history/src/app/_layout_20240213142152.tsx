@@ -4,32 +4,11 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native'
+import { useFonts } from 'expo-font'
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
-// optional but recommended CSS reset:
-
-import '@tamagui/core/reset.css'
-
-import { TamaguiProvider, View } from '@tamagui/core'
-
-import {
-  useFonts,
-  JosefinSans_100Thin,
-  JosefinSans_200ExtraLight,
-  JosefinSans_300Light,
-  JosefinSans_400Regular,
-  JosefinSans_500Medium,
-  JosefinSans_600SemiBold,
-  JosefinSans_700Bold,
-  JosefinSans_100Thin_Italic,
-  JosefinSans_200ExtraLight_Italic,
-  JosefinSans_300Light_Italic,
-  JosefinSans_400Regular_Italic,
-  JosefinSans_500Medium_Italic,
-  JosefinSans_600SemiBold_Italic,
-  JosefinSans_700Bold_Italic,
-} from '@expo-google-fonts/josefin-sans'
+import {useFonts, }
 
 import { useColorScheme } from '@components/useColorScheme'
 
