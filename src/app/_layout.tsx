@@ -1,4 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import {
   DarkTheme,
   DefaultTheme,
@@ -28,7 +29,7 @@ import {
   JosefinSans_600SemiBold_Italic,
   JosefinSans_700Bold_Italic,
 } from '@expo-google-fonts/josefin-sans'
-
+import SoundProvider from '../providers/SoundProvider'
 import { TamaguiProvider, createTamagui } from '@tamagui/core'
 import { config } from '@tamagui/config/v3'
 
@@ -82,16 +83,18 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <TamaguiProvider config={tamaguiConfig}>
-      <Stack>
-        <Stack.Screen
-          name='(tabs)'
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name='modal'
-          options={{ presentation: 'modal' }}
-        />
-      </Stack>
+      <SoundProvider>
+        <Stack>
+          <Stack.Screen
+            name='(tabs)'
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='modal'
+            options={{ presentation: 'modal' }}
+          />
+        </Stack>
+      </SoundProvider>
     </TamaguiProvider>
   )
 }

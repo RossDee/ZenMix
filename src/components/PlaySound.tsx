@@ -34,7 +34,9 @@ const SoundPlayer = ({
     console.log('Sound source: ', soundSrc)
 
     try {
-      const { sound } = await Audio.Sound.createAsync(require(''))
+      const { sound } = await Audio.Sound.createAsync(
+        require('@public/sounds/animals/birds.mp3')
+      )
       console.log('Playing Sound') // Print when the sound starts playing
       setSound(sound)
       await sound.playAsync()

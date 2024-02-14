@@ -1,71 +1,31 @@
-import { StyleSheet } from 'react-native'
-import { View } from '@tamagui/core'
-import { ListItem, YGroup } from 'tamagui'
-import { BadgeCheck } from '@tamagui/lucide-icons'
+import SoundGroup from '@/src/components/CategoryGroup'
+import { View, XStack, YStack, ScrollView, Button } from 'tamagui'
 import { animals } from '@/src/data/sounds/animals'
-import { useState } from 'react'
-import SoundPlayer from '@/src/components/PlaySound'
-const animalSounds = animals
+import { noise } from '@/src/data/sounds/noise'
+import { urban } from '@/src/data/sounds/urban'
+import { nature } from '@/src/data/sounds/nature'
+import { Airplay } from '@tamagui/lucide-icons'
+import MiniPlayer from '@/src/components/MiniPlayer'
 
 export default function TabOneScreen() {
-  const [isSelected, setIsSelected] = useState(false)
-  const [selectedSoundId, setSelectedSoundId] = useState<
-    Record<string, boolean>
-  >({})
-
   return (
-    <View margin={10}>
-      <View>
-        <YGroup
-          alignSelf='center'
-          bordered
-          width='$25'
-          size='$4'
+    <>
+      <ScrollView>
+        <YStack
+          flex={1}
+          backgroundColor='$background'
+          elevation={1}
+          borderRadius={10}
+          paddingHorizontal={10}
+          paddingVertical={10}
         >
-          {animalSounds.sounds.map((sound) => (
-            <YGroup.Item key={sound.id}>
-              <SoundPlayer
-                soundSrc={sound.src}
-                play={selectedSoundId[sound.id]}
-              />
-              <ListItem
-                hoverTheme
-                pressTheme
-                bordered
-                icon={sound.icon}
-                title={sound.label}
-                subTitle={sound.id}
-                iconAfter={selectedSoundId[sound.id] && BadgeCheck}
-                onPress={() => {
-                  setSelectedSoundId((preSelectedSoundId) => {
-                    return {
-                      ...preSelectedSoundId,
-                      [sound.id]: !preSelectedSoundId[sound.id],
-                    }
-                  })
-                }}
-              />
-            </YGroup.Item>
-          ))}
-        </YGroup>
-      </View>
-    </View>
+          <SoundGroup soundCategory={urban} />
+          <SoundGroup soundCategory={nature} />
+          <SoundGroup soundCategory={animals} />
+          <SoundGroup soundCategory={noise} />
+        </YStack>
+      </ScrollView>
+      <MiniPlayer />
+    </>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-})
