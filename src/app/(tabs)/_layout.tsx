@@ -45,7 +45,7 @@ export default function TabLayout() {
           ),
           headerRight: () => (
             <Link
-              href='/modal'
+              href='/soundlist'
               asChild
             >
               <Pressable>

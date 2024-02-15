@@ -12,7 +12,7 @@ export default function TabOneScreen() {
     <>
       <ScrollView>
         <YStack
-          flex={1}
+          flex={2}
           backgroundColor='$background'
           elevation={1}
           borderRadius={10}

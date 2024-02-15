@@ -17,7 +17,6 @@ import { Airplay, Bird } from '@tamagui/lucide-icons'
 import { useSound } from '../providers/SoundProvider'
 
 export default function MiniPlayer(props: CardProps) {
-  const { items, handleAddSound } = useSound()
   const [progress, setProgress] = useState(40)
   const [size, setSize] = useState(0.5)
   const sizeProp = `$${size}` as SizeTokens

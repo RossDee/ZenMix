@@ -90,7 +90,7 @@ function RootLayoutNav() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name='modal'
+            name='soundlist'
             options={{ presentation: 'modal' }}
           />
         </Stack>
