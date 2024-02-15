@@ -32,34 +32,37 @@ export default function MiniPlayer(props: CardProps) {
         {...props}
       >
         <XStack>
-          <XStack>
+          <YStack>
             {currentSoundTracks.map((sound) => (
-              <Button
-                key={sound.id}
-                borderRadius='$10'
-                size='$5'
-                icon={sound.icon}
-                onPress={() => {
-                  setProgress(Math.floor(Math.random() * 100))
-                }}
-              />
+              <XStack key={sound.id}>
+                <XStack
+                  alignContent='center'
+                  justifyContent='space-between'
+                  alignItems='center'
+                  flexDirection='column'
+                  space
+                >
+                  <Button
+                    key={sound.id}
+                    borderRadius='$10'
+                    size='$5'
+                    icon={sound.icon}
+                    onPress={() => {
+                      setProgress(Math.floor(Math.random() * 100))
+                    }}
+                  />
+                </XStack>
+              </XStack>
             ))}
-          </XStack>
-          <YStack />
-          <Button
-            borderRadius='$12'
-            icon={Play}
-          >
-            <Text>{soundNum}</Text>
-          </Button>
-
-          <YStack />
-          <Progress
-            size={sizeProp}
-            value={progress}
-          >
-            <Progress.Indicator animation='bouncy' />
-          </Progress>
+          </YStack>
+          <YStack>
+            <Button
+              borderRadius='$12'
+              icon={Play}
+            >
+              <Text>{soundNum}</Text>
+            </Button>
+          </YStack>
         </XStack>
         <Card.Background></Card.Background>
       </Card>

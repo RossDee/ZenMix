@@ -1,7 +1,16 @@
-import { ChevronDown } from '@tamagui/lucide-icons'
-import { Button, H2, Paragraph, Sheet, SheetProps, YStack } from 'tamagui'
-
+import { ChevronDown, ChevronRight } from '@tamagui/lucide-icons'
+import {
+  Button,
+  Group,
+  ListItem,
+  Sheet,
+  SheetProps,
+  YGroup,
+  YStack,
+} from 'tamagui'
+import { useSound } from '../providers/SoundProvider'
 export default function InnerSheet(props: SheetProps) {
+  const { currentSoundTracks } = useSound()
   return (
     <Sheet
       animation='medium'
@@ -34,19 +43,19 @@ export default function InnerSheet(props: SheetProps) {
               icon={ChevronDown}
               onPress={() => props.onOpenChange?.(false)}
             />
-            <H2>Hello world</H2>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-              <Paragraph
-                key={i}
-                size='$8'
-              >
-                Eu officia sunt ipsum nisi dolore labore est laborum laborum in
-                esse ad pariatur. Dolor excepteur esse deserunt voluptate labore
-                ea. Exercitation ipsum deserunt occaecat cupidatat consequat est
-                adipisicing velit cupidatat ullamco veniam aliquip reprehenderit
-                officia. Officia labore culpa ullamco velit. In sit occaecat
-                velit ipsum fugiat esse aliqua dolor sint.
-              </Paragraph>
+            {currentSoundTracks.map((sound) => (
+              <Group>
+                <YGroup.Item key={sound.id}>
+                  <ListItem
+                    hoverTheme
+                    pressTheme
+                    title={sound.label}
+                    subTitle={sound.id}
+                    icon={sound.icon}
+                    iconAfter={ChevronRight}
+                  />
+                </YGroup.Item>
+              </Group>
             ))}
           </YStack>
         </Sheet.ScrollView>
