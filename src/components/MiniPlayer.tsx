@@ -1,80 +1,68 @@
 import {
+  Text,
   XStack,
   Button,
   Card,
-  Paragraph,
-  H2,
   YStack,
   Progress,
-  Avatar,
-  H4,
   Group,
   CardProps,
   SizeTokens,
 } from 'tamagui'
 import React, { useState } from 'react'
-import { Airplay, Bird } from '@tamagui/lucide-icons'
 import { useSound } from '../providers/SoundProvider'
+import { Play } from '@tamagui/lucide-icons'
 
 export default function MiniPlayer(props: CardProps) {
   const [progress, setProgress] = useState(40)
   const [size, setSize] = useState(0.5)
   const sizeProp = `$${size}` as SizeTokens
+  const { currentSoundTracks } = useSound()
+  const soundNum = currentSoundTracks.length
   return (
     <XStack padding='$2'>
-      <YStack
-        flex={1}
-        borderRadius='$4'
-        padding='$2'
-        alignSelf='center'
+      <Card
+        elevate
+        size='$5'
+        height={80}
+        width='100%'
+        flexDirection='row'
         alignContent='center'
-        justifyContent='space-between'
+        alignItems='center'
+        {...props}
       >
-        <Card
-          elevate
-          size='$5'
-          bordered
-          height={80}
-          width='100%'
-          flexDirection='row'
-          alignContent='space-between'
-          {...props}
-        >
-          <Group
-            flexDirection='row'
-            borderRadius='$10'
-            alignItems='center'
-            justifyContent='space-around'
-          >
-            <Group.Item>
-              <Bird
-                size={40}
-                alignSelf='center'
-                alignItems='center'
-                alignContent='center'
-              />
-              <Card.Header padded>
-                <H4>Bird</H4>
-                <Paragraph theme='alt2'>Nature</Paragraph>
-              </Card.Header>
+        <XStack>
+          <XStack>
+            {currentSoundTracks.map((sound) => (
               <Button
-                borderRadius='$12'
-                icon={Airplay}
-              >
-                Play
-              </Button>
-            </Group.Item>
-          </Group>
-          <Card.Background></Card.Background>
-        </Card>
+                key={sound.id}
+                borderRadius='$10'
+                size='$5'
+                icon={sound.icon}
+                onPress={() => {
+                  setProgress(Math.floor(Math.random() * 100))
+                }}
+              />
+            ))}
+          </XStack>
+          <YStack />
+          <Button
+            borderRadius='$12'
+            icon={Play}
+          >
+            <Text>{soundNum}</Text>
+          </Button>
 
-        <Progress
-          size={sizeProp}
-          value={progress}
-        >
-          <Progress.Indicator animation='bouncy' />
-        </Progress>
-      </YStack>
+          <YStack />
+          <Progress
+            size={sizeProp}
+            value={progress}
+          >
+            <Progress.Indicator animation='bouncy' />
+          </Progress>
+        </XStack>
+        <Card.Background></Card.Background>
+      </Card>
     </XStack>
   )
 }

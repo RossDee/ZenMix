@@ -20,9 +20,7 @@ export default function TabOneScreen() {
           paddingVertical={10}
         >
           <SoundGroup soundCategory={urban} />
-          <SoundGroup soundCategory={nature} />
           <SoundGroup soundCategory={animals} />
-          <SoundGroup soundCategory={noise} />
         </YStack>
       </ScrollView>
       <MiniPlayer />
