@@ -30,8 +30,9 @@ import {
   JosefinSans_700Bold_Italic,
 } from '@expo-google-fonts/josefin-sans'
 import SoundProvider from '../providers/SoundProvider'
-import { TamaguiProvider, createTamagui } from '@tamagui/core'
-import { config } from '@tamagui/config/v3'
+import { TamaguiProvider, Theme, createTamagui } from '@tamagui/core'
+import { config, themes } from '@tamagui/config/v3'
+import { PortalProvider } from 'tamagui'
 
 const tamaguiConfig = createTamagui(config)
 
@@ -83,18 +84,26 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <TamaguiProvider config={tamaguiConfig}>
-      <SoundProvider>
-        <Stack>
-          <Stack.Screen
-            name='(tabs)'
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name='soundlist'
-            options={{ presentation: 'modal' }}
-          />
-        </Stack>
-      </SoundProvider>
+      <PortalProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <Theme name='dark_blue'>
+            <SoundProvider>
+              <Stack>
+                <Stack.Screen
+                  name='(tabs)'
+                  options={{
+                    headerShown: false,
+                  }}
+                />
+                <Stack.Screen
+                  name='soundlist'
+                  options={{ presentation: 'modal' }}
+                />
+              </Stack>
+            </SoundProvider>
+          </Theme>
+        </GestureHandlerRootView>
+      </PortalProvider>
     </TamaguiProvider>
   )
 }

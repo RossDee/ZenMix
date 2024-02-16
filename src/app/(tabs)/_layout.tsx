@@ -1,13 +1,10 @@
 import React from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome'
 import { Link, Tabs } from 'expo-router'
-import { Pressable } from 'react-native'
-import { Stack } from 'expo-router'
-import Colors from '@constants/Colors'
-import { useColorScheme } from '@components/useColorScheme'
-import { useClientOnlyValue } from '@components/useClientOnlyValue'
+import { Pressable, StatusBar } from 'react-native'
+import { themes } from '@tamagui/config/v3'
+import { Stack } from 'tamagui'
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name']
   color: string
@@ -22,25 +19,27 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme()
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
+        headerStyle: {
+          backgroundColor: themes.dark_blue.background,
+        },
+        headerTintColor: themes.dark_blue.color,
+        tabBarActiveTintColor: themes.dark_blue.color,
+        tabBarStyle: {
+          backgroundColor: themes.dark_blue.background,
+        },
       }}
     >
       <Tabs.Screen
         name='index'
         options={{
-          title: 'Tab One',
+          title: 'ZenMix',
           tabBarIcon: ({ color }) => (
             <TabBarIcon
               name='code'
-              color={color}
+              color={themes.dark_blue.color}
             />
           ),
           headerRight: () => (
@@ -53,7 +52,7 @@ export default function TabLayout() {
                   <FontAwesome
                     name='info-circle'
                     size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
+                    color={themes.dark_blue.color}
                     style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
                   />
                 )}
@@ -66,6 +65,7 @@ export default function TabLayout() {
         name='two'
         options={{
           title: 'Tab Two',
+
           tabBarIcon: ({ color }) => (
             <TabBarIcon
               name='code'
