@@ -1,39 +1,38 @@
-import { View, Text } from 'tamagui'
-
 import React from 'react'
 import type { CardProps } from 'tamagui'
 import type { Category } from '../data/types'
-import { Button, Card, H2, Image, Paragraph, XStack } from 'tamagui'
-import { useSound } from '../providers/SoundProvider'
+import { Button, Card, H4, Paragraph, XGroup } from 'tamagui'
 
 interface SoundGroupProps {
   soundCategory: Category
 }
-export default function SoundCard(
-  {
-    SoundProps,
-  }: {
-    soundCategory: Category
-  },
-  props: { CardProps?: CardProps }
-) {
+export default function SoundCard({
+  soundCategory,
+  ...CardProps
+}: SoundGroupProps & CardProps) {
   return (
-    <View flex={2}>
-      <Card
-        elevate
-        size='$4'
-        bordered
-        {...props.CardProps}
-      >
-        <Card.Header padded>
-          <H2>Sony A7IV</H2>
-          <Paragraph theme='alt2'>Now available</Paragraph>
-        </Card.Header>
-        <Card.Footer padded>
-          <XStack flex={1} />
-          <Button borderRadius='$10'>Purchase</Button>
-        </Card.Footer>
-      </Card>
-    </View>
+    <XGroup flexWrap='wrap'>
+      {soundCategory.sounds.map((sound) => (
+        <Card
+          elevate
+          size='$4'
+          key={sound.id}
+          {...CardProps}
+        >
+          <Card.Header padded>
+            <H4>{sound.id}</H4>
+            <Paragraph theme='alt2'>{sound.label}</Paragraph>
+          </Card.Header>
+          <Card.Footer padded>
+            <Button
+              borderRadius='$10'
+              icon={sound.icon}
+            >
+              {sound.id}
+            </Button>
+          </Card.Footer>
+        </Card>
+      ))}
+    </XGroup>
   )
 }
