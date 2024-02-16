@@ -1,7 +1,7 @@
 import React from 'react'
 import type { CardProps } from 'tamagui'
 import type { Category } from '../data/types'
-import { Button, Card, H4, Paragraph, XGroup } from 'tamagui'
+import { Button, Card, H4, Label, Paragraph, Text, XGroup } from 'tamagui'
 
 interface SoundGroupProps {
   soundCategory: Category
@@ -11,7 +11,10 @@ export default function SoundCard({
   ...CardProps
 }: SoundGroupProps & CardProps) {
   return (
-    <XGroup flexWrap='wrap'>
+    <XGroup
+      flexWrap='wrap'
+      justifyContent='space-between'
+    >
       {soundCategory.sounds.map((sound) => (
         <Card
           elevate
