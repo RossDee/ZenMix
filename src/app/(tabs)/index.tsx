@@ -6,6 +6,7 @@ import { places } from '@/src/data/sounds/places'
 import MiniPlayer from '@/src/components/MiniPlayer'
 import { themes } from '@tamagui/config/v3'
 import SoundCard from '@/src/components/SoundCard'
+import SoundPlayer from '@/src/components/PlaySound'
 
 export default function TabOneScreen() {
   return (
