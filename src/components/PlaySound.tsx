@@ -24,16 +24,21 @@ const SoundPlayer: React.FC<SoundPlayerProps> = ({
 
   useEffect(() => {
     if (sounds.length > 0) {
-      console.log('Loading sounds...')
-      load(sounds)
+      if (action === 'play') {
+        load(sounds)
+      }
     }
-  }, [sounds])
+  }, [sounds, action])
 
   useEffect(() => {
     console.log('Action changed:', action)
     switch (action) {
       case 'play':
-        soundObjects.forEach((sound) => play(sound))
+        soundObjects.forEach((sound) => {
+          if (sound) {
+            play(sound)
+          }
+        })
         break
       case 'pause':
         soundObjects.forEach((sound) => pause(sound))
@@ -94,8 +99,20 @@ const SoundPlayer: React.FC<SoundPlayerProps> = ({
 
   async function stop(sound: Audio.Sound | null) {
     console.log('Stopping sound:', sound)
-    await sound?.stopAsync()
-    onStatusUpdate('stopped')
+    try {
+      if (sound !== null) {
+        const status = await sound.getStatusAsync()
+        if (status.isLoaded) {
+          await sound.stopAsync()
+          console.log('Your sound has been stopped!' + sound)
+          await sound.unloadAsync()
+        } else {
+          console.log('Sound is not loaded' + sound)
+        }
+      }
+    } catch (error) {
+      console.error('Error stopping sound:', error)
+    }
   }
 
   return null
