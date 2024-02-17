@@ -2,24 +2,17 @@
 import React, { useEffect, useState } from 'react'
 import { Button, View, Modal, TouchableOpacity, Text } from 'react-native'
 import SoundPlayer from '@/src/components/PlaySound'
-import { Slider } from 'tamagui'
+import { Slider, Spinner } from 'tamagui'
 import { supabase } from '@/src/lib/supabase'
+import { useQuery } from '@tanstack/react-query'
+import {
+  useSupaCategories,
+  useSupaSoundUrl,
+  useSupaSounds,
+  useSupaUpdateSoundUrl,
+} from '@/src/api/sounds'
 
 const App = () => {
-  useEffect(() => {
-    const fetchCSoundCategories = async () => {
-      const { data, error } = await supabase
-        .from('categorylist')
-        .select('id, category_name,icon')
-      if (error) {
-        console.error('Error fetching sound categories:', error)
-      } else {
-        console.warn('Sound categories:', data)
-      }
-    }
-    fetchCSoundCategories()
-  }, [])
-
   const [playSound, setPlaySound] = useState(false)
   const [volume, setVolume] = useState([1])
   const [modalVisible, setModalVisible] = useState(false)
@@ -45,6 +38,25 @@ const App = () => {
     if (value > 0) {
       setTimeout(handlePlayPause, value * 60 * 1000)
     }
+  }
+
+  const SoundComponent = () => {
+    const { data: soundDetails, isLoading } = useSupaSounds()
+    const updateSoundUrl = useSupaUpdateSoundUrl()
+
+    useEffect(() => {
+      if (!isLoading && soundDetails) {
+        soundDetails.forEach((sound) => {
+          const { data: url } = useSupaSoundUrl(sound.id, sound.path)
+
+          if (url) {
+            updateSoundUrl.mutate({ id: sound.id, url })
+          }
+        })
+      }
+    }, [isLoading, soundDetails, updateSoundUrl])
+
+    // Rest of your component
   }
 
   return (

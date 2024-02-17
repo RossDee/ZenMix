@@ -8,7 +8,7 @@ import {
 import { Stack } from 'expo-router'
 import * as SplashScreen from 'expo-splash-screen'
 import { useEffect } from 'react'
-// optional but recommended CSS reset:
+import QueryProvider from '../providers/QueryProvider'
 
 import '@tamagui/core/reset.css'
 
@@ -84,26 +84,28 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <TamaguiProvider config={tamaguiConfig}>
-      <PortalProvider>
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <Theme name='dark_blue'>
-            <SoundProvider>
-              <Stack>
-                <Stack.Screen
-                  name='(tabs)'
-                  options={{
-                    headerShown: false,
-                  }}
-                />
-                <Stack.Screen
-                  name='soundlist'
-                  options={{ presentation: 'modal' }}
-                />
-              </Stack>
-            </SoundProvider>
-          </Theme>
-        </GestureHandlerRootView>
-      </PortalProvider>
+      <QueryProvider>
+        <PortalProvider>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <Theme name='dark_blue'>
+              <SoundProvider>
+                <Stack>
+                  <Stack.Screen
+                    name='(tabs)'
+                    options={{
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name='soundlist'
+                    options={{ presentation: 'modal' }}
+                  />
+                </Stack>
+              </SoundProvider>
+            </Theme>
+          </GestureHandlerRootView>
+        </PortalProvider>
+      </QueryProvider>
     </TamaguiProvider>
   )
 }
