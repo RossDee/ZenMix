@@ -41,7 +41,7 @@ export const useSupaSounds = () => {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('soundlist')
-        .select('id,sound_path')
+        .select('id,sound_path,sound_src')
       if (error) {
         throw new Error(error.message)
       }
@@ -58,13 +58,13 @@ export const useSupaSounds = () => {
  * @param path - The path to the sound file in storage
  * @returns A React Query result containing the signed URL
  */
-export const useSupaSoundUrls = (id: string, path: Array<string>) => {
+export const useSupaSoundUrl = (id: string, path: string) => {
   return useQuery({
     queryKey: ['sound', id],
     queryFn: async () => {
       const { data, error } = await supabase.storage
         .from('zenmix')
-        .createSignedUrls(path, 60 * 60 * 24 * 7)
+        .createSignedUrl(path, 60 * 60 * 24 * 30) // 30 days
       if (error) {
         throw new Error(error.message)
       }
