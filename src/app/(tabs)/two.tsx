@@ -1,10 +1,25 @@
 // App.tsx
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, View, Modal, TouchableOpacity, Text } from 'react-native'
 import SoundPlayer from '@/src/components/PlaySound'
 import { Slider } from 'tamagui'
+import { supabase } from '@/src/lib/supabase'
 
 const App = () => {
+  useEffect(() => {
+    const fetchCSoundCategories = async () => {
+      const { data, error } = await supabase
+        .from('categorylist')
+        .select('id, category_name,icon')
+      if (error) {
+        console.error('Error fetching sound categories:', error)
+      } else {
+        console.warn('Sound categories:', data)
+      }
+    }
+    fetchCSoundCategories()
+  }, [])
+
   const [playSound, setPlaySound] = useState(false)
   const [volume, setVolume] = useState([1])
   const [modalVisible, setModalVisible] = useState(false)
