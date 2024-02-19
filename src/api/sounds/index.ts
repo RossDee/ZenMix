@@ -39,9 +39,7 @@ export const useSupaSounds = () => {
   return useQuery({
     queryKey: ['soundlist'],
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('soundlist')
-        .select('id,sound_path,sound_src')
+      const { data, error } = await supabase.from('soundlist').select('*')
       if (error) {
         throw new Error(error.message)
       }
